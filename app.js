@@ -1,4 +1,5 @@
-const API_BASE = 'https://api.coingecko.com/api/v3';
+const API_BASE = (window.__ENV__ && window.__ENV__.COINGECKO_API_BASE) || 'https://api.coingecko.com/api/v3';
+const REFRESH_INTERVAL_MS = (window.__ENV__ && window.__ENV__.REFRESH_INTERVAL_MS) || 60000;
 
 const state = {
     cryptocurrencies: [],
@@ -445,5 +446,5 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
         fetchGlobalStats();
         fetchCryptocurrencies();
-    }, 60000);
+    }, REFRESH_INTERVAL_MS);
 });
