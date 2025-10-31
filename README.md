@@ -114,6 +114,124 @@ The app adapts to different screen sizes:
 | Portfolio | ✓ | ✓ | ✓ |
 | Watchlist | ✓ | ✓ | ✓ |
 
+## Deployment
+
+### Deploy to Vercel
+
+This app is optimized for deployment on Vercel. Follow these steps to deploy, or refer to [`DEPLOYMENT.md`](./DEPLOYMENT.md) for a more detailed guide covering preview environments, monitoring, and troubleshooting.
+
+#### Prerequisites
+- A [Vercel account](https://vercel.com/signup) (free tier works great)
+- Git repository with your code (GitHub, GitLab, or Bitbucket)
+
+#### One-Click Deploy
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+
+#### Manual Deployment Steps
+
+1. **Install Vercel CLI** (optional):
+   ```bash
+   npm install -g vercel
+   ```
+
+2. **Deploy from CLI**:
+   ```bash
+   vercel
+   ```
+   Follow the prompts to link your project and deploy.
+
+3. **Deploy from Git Repository**:
+   - Go to [Vercel Dashboard](https://vercel.com/dashboard)
+   - Click "New Project"
+   - Import your Git repository
+   - Configure project settings:
+     - **Framework Preset**: Other (Static Site)
+     - **Build Command**: `pnpm build`
+     - **Output Directory**: `dist`
+     - **Install Command**: `pnpm install` (or leave blank to use the default)
+   - Click "Deploy"
+
+#### Environment Variables
+
+This app uses the free CoinGecko API which doesn't require an API key. However, you can fine-tune runtime behaviour with the provided configuration variables:
+
+1. Copy `.env.example` to `.env.local`:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. Update the available variables:
+
+   | Variable | Description | Default |
+   |----------|-------------|---------|
+   | `COINGECKO_API_BASE` | Base URL for the CoinGecko API (override to use a proxy or paid endpoint) | `https://api.coingecko.com/api/v3` |
+   | `REFRESH_INTERVAL_MS` | Interval between market data refreshes (milliseconds) | `60000` |
+   | `COINGECKO_API_KEY` | Optional key for CoinGecko paid plans | _blank_ |
+
+3. In Vercel Dashboard:
+   - Go to Project Settings → Environment Variables
+   - Add the same variables for Production, Preview, and Development scopes as needed
+   - Trigger a redeploy so the new values are applied during the build step
+
+#### Optional Vercel Features
+
+Enable these in your Vercel project settings for enhanced functionality:
+
+- **Vercel Analytics**: Track visitor metrics and page views
+- **Vercel Speed Insights**: Monitor real user performance metrics
+- **Custom Domain**: Add your own domain name
+- **Preview Deployments**: Automatic deployments for pull requests
+
+#### Deployment Configuration
+
+The project includes a `vercel.json` configuration file that sets:
+- Security headers (X-Content-Type-Options, X-Frame-Options, etc.)
+- Caching policies for static assets
+- Clean URLs without `.html` extensions
+- Optimized regional deployment (US East by default)
+
+#### Production Checklist
+
+Before deploying to production, ensure:
+
+- ✅ All static files (HTML, CSS, JS) are committed to repository
+- ✅ `.gitignore` is properly configured to exclude `.env` files and `dist/` folder
+- ✅ `.env.example` is up-to-date with all required variables
+- ✅ External APIs (CoinGecko) are accessible and working
+- ✅ Browser compatibility tested (Chrome, Firefox, Safari, Edge)
+- ✅ Responsive design verified on mobile, tablet, and desktop
+- ✅ Theme toggle functionality working
+- ✅ LocalStorage persistence working correctly
+- ✅ No console errors in production build
+- ✅ Security headers configured (via vercel.json)
+- ✅ Build command (`pnpm build`) executes successfully
+- ✅ Analytics and monitoring enabled (optional)
+- ✅ Vercel project settings correctly configured with build/output directories
+
+Looking for a more exhaustive verification list? See [`DEPLOYMENT_CHECKLIST.md`](./DEPLOYMENT_CHECKLIST.md) for a printable, step-by-step runbook.
+
+#### Monitoring Your Deployment
+
+After deployment:
+
+1. **Check Build Logs**: Review deployment logs in Vercel Dashboard
+2. **Test Preview URL**: Vercel provides a preview URL for every deployment
+3. **Monitor Performance**: Use Vercel Speed Insights to track performance
+4. **Track Usage**: Use Vercel Analytics to monitor visitor behavior
+5. **Set up Alerts**: Configure notifications for deployment failures
+
+#### Troubleshooting
+
+Common issues and solutions:
+
+- **API Rate Limiting**: CoinGecko free tier has rate limits. Consider upgrading if needed.
+- **CORS Errors**: Should not occur with client-side requests, but check browser console.
+- **LocalStorage Issues**: Ensure third-party cookies/storage is enabled in browser.
+- **Loading Errors**: Check network tab for failed API requests.
+
+For more information, see [Vercel Documentation](https://vercel.com/docs).
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -126,3 +244,4 @@ This project is open source and available under the MIT License.
 
 - [CoinGecko](https://www.coingecko.com/) for providing the free cryptocurrency API
 - [Google Fonts](https://fonts.google.com/) for the Inter font family
+- [Vercel](https://vercel.com/) for hosting platform

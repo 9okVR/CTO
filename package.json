@@ -1,0 +1,13 @@
+{
+  "name": "cryptotracker",
+  "version": "1.0.0",
+  "description": "Responsive cryptocurrency market dashboard",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
